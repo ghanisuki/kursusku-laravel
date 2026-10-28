@@ -1,0 +1,17 @@
+REFLEKSI SINGKAT - PERTEMUAN 6 (tulis dengan bahasa Anda sendiri)
+
+Bagian paling saya pahami            :
+Bagian yang masih membingungkan      :
+Satu bug yang saya temukan           :
+Cara saya memperbaikinya             :
+Perbedaan branching dan looping      :
+
+Penjelasan yang harus dikuasai:
+1. Perbedaan radio dan checkbox.
+2. Mengapa checkbox memakai [].
+3. Alasan memakai foreach.
+4. Alasan diskon memakai percabangan.
+5. Urutan perhitungan total (satuan -> paket -> subtotal -> persen diskon -> nilai diskon -> total).
+6. Fungsi ?? pada input POST.
+7. Fungsi htmlspecialchars().
+8. Mengapa belum memakai database.
