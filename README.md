@@ -1,6 +1,6 @@
 # KursusKu
 
-Project praktikum Pemrograman Web III — **Pertemuan 9**.
+Project praktikum Pemrograman Web III — **Pertemuan 11**.
 
 Ini lanjutan project pertemuan 7, bukan project baru dari nol.
 Riwayat Git masih menyimpan landing page minggu 7, lalu commit UI + Ajax minggu 9.
@@ -38,7 +38,7 @@ Periksa route:
 php artisan route:list
 ```
 
-Wajib ada nama: `home`, `enrollments.create`, `enrollments.preview`, `courses.availability`.
+Wajib ada nama: `home`, `enrollments.create`, `enrollments.preview`, `courses.availability`, dan 7 route `courses.*` (index, create, store, show, edit, update, destroy).
 
 ## Fitur Milestone 9
 
@@ -50,10 +50,19 @@ Wajib ada nama: `home`, `enrollments.create`, `enrollments.preview`, `courses.av
 - jQuery Ajax mengubah sisa kursi tanpa reload
 - Bootstrap dan Popper lewat Vite, bukan CDN
 
+## Fitur Milestone 11 — Course CRUD Lengkap
+
+- Resource `courses` lengkap: index, create, store, show, edit, update, destroy
+- Validasi di `StoreCourseRequest` dan `UpdateCourseRequest` (unique update memakai `ignore`)
+- Form create/edit berbagi partial `courses/_form.blade.php`, memakai `old()` dan `@error` per field
+- Delete memakai `@csrf` + `@method('DELETE')` + konfirmasi
+- Test matrix 15 kasus: `php artisan test --filter=CourseCrudTest`
+
+Langkah rinci: [LANGKAH-PERTEMUAN-11.md](LANGKAH-PERTEMUAN-11.md).
+
 ## Belum Dikerjakan
 
-- Tabel database Course / Enrollment
-- CRUD Eloquent
+- Relasi Course - Participant - Enrollment
 - Authentication
 - Ajax POST
 

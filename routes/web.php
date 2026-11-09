@@ -49,4 +49,5 @@ Route::get('/courses/{course}/availability', function (int $course) {
 
     return response()->json($availability[$course]);
 })->name('courses.availability');
-Route::resource('courses', CourseController::class)->only(['index', 'create', 'store']);
+
+Route::resource('courses', CourseController::class);
