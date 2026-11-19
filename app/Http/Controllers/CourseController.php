@@ -30,6 +30,9 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
+        // Peserta terdaftar diambil lewat relasi Course -> enrollments -> participant.
+        $course->load('enrollments.participant');
+
         return view('courses.show', compact('course'));
     }
 
@@ -52,5 +55,19 @@ class CourseController extends Controller
 
         return to_route('courses.index')
             ->with('success', 'Kursus berhasil dihapus.');
+    }
+
+    /**
+     * JSON sisa kursi untuk Ajax pada form enrollment (pertemuan 9),
+     * sekarang dihitung dari database: quota - jumlah enrollment.
+     */
+    public function availability(Course $course)
+    {
+        $course->loadCount('enrollments');
+
+        return response()->json([
+            'course' => $course->name,
+            'remaining' => max(0, $course->quota - $course->enrollments_count),
+        ]);
     }
 }

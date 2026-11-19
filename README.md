@@ -1,6 +1,6 @@
 # KursusKu
 
-Project praktikum Pemrograman Web III — **Pertemuan 11**.
+Project praktikum Pemrograman Web III — **Pertemuan 12**.
 
 Ini lanjutan project pertemuan 7, bukan project baru dari nol.
 Riwayat Git masih menyimpan landing page minggu 7, lalu commit UI + Ajax minggu 9.
@@ -38,7 +38,7 @@ Periksa route:
 php artisan route:list
 ```
 
-Wajib ada nama: `home`, `enrollments.create`, `enrollments.preview`, `courses.availability`, dan 7 route `courses.*` (index, create, store, show, edit, update, destroy).
+Wajib ada nama: `home`, `courses.availability`, 7 route `courses.*` (index, create, store, show, edit, update, destroy), dan `enrollments.index`, `enrollments.create`, `enrollments.store`.
 
 ## Fitur Milestone 9
 
@@ -60,9 +60,21 @@ Wajib ada nama: `home`, `enrollments.create`, `enrollments.preview`, `courses.av
 
 Langkah rinci: [LANGKAH-PERTEMUAN-11.md](LANGKAH-PERTEMUAN-11.md).
 
+## Fitur Milestone 12 — Relational Core v1
+
+- Tabel `participants` dan `enrollments` (2 foreign key `cascadeOnDelete`, unique `participant_id + course_id`)
+- Relasi Eloquent: `hasMany`, `belongsTo`, dan `belongsToMany` via enrollments
+- Form enrollment dengan dua dropdown relasional (hanya course berstatus `open`), validasi duplikasi
+- Laporan relasional `/enrollments` (participant, course, start date, status) dengan eager loading
+- Sisa kursi Ajax kini dihitung dari database
+- Tes: `php artisan test --filter=EnrollmentTest`
+
+Setelah mengambil perubahan ini: `php artisan migrate` lalu `php artisan db:seed --class=ParticipantSeeder`.
+Langkah rinci: [LANGKAH-PERTEMUAN-12.md](LANGKAH-PERTEMUAN-12.md).
+
 ## Belum Dikerjakan
 
-- Relasi Course - Participant - Enrollment
+- Pagination, searching, Ajax filter
 - Authentication
 - Ajax POST
 

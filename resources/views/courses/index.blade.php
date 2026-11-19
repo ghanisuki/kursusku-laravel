@@ -38,7 +38,7 @@
                                class="btn btn-sm btn-outline-warning">Edit</a>
                             <form method="POST"
                                   action="{{ route('courses.destroy', $course) }}"
-                                  onsubmit="return confirm('Hapus kursus ini?')">
+                                  onsubmit="return confirm('Hapus kursus ini? Enrollment yang terkait ikut terhapus (cascade).')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>

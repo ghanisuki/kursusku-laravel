@@ -40,4 +40,22 @@
         </dl>
     </div>
 </div>
+
+<div class="card shadow-sm mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">Peserta Terdaftar ({{ $course->enrollments->count() }} dari {{ $course->quota }} kursi)</span>
+        <a href="{{ route('enrollments.create') }}" class="btn btn-sm btn-success">Tambah Enrollment</a>
+    </div>
+    <ul class="list-group list-group-flush">
+        @forelse ($course->enrollments as $enrollment)
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ $enrollment->participant->name }}
+                    <span class="text-muted small">{{ $enrollment->participant->email }}</span></span>
+                <span class="badge text-bg-success">{{ $enrollment->status }}</span>
+            </li>
+        @empty
+            <li class="list-group-item text-muted">Belum ada peserta.</li>
+        @endforelse
+    </ul>
+</div>
 @endsection
