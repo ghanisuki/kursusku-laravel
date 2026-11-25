@@ -8,13 +8,13 @@ Alamat dasar: `http://127.0.0.1:8000`
 
 | No | Skenario | URL / langkah | Expected | Actual | Status | Bukti |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 0 hasil | `/courses?q=tidak-ada-xyz-999` | Empty state tampil, tanpa error | | Pass / Fail | |
-| 2 | 1 hasil | `/courses?q=zenith` | Tepat 1 course | | Pass / Fail | |
-| 3 | Lebih dari 10 hasil | `/courses?status=open` | Halaman 1 maksimal 10 baris + pagination | | Pass / Fail | |
-| 4 | Keyword dengan spasi | `/courses?q=Web Modern` | Keyword terbaca benar (5 course dummy) | | Pass / Fail | |
-| 5 | Filter + page 2 | `/courses?status=open`, klik halaman 2 | q/status tetap, data tetap berstatus open | | Pass / Fail | |
+| 1 | 0 hasil | `/courses?q=tidak-ada-xyz-999` | Empty state tampil, tanpa error | Pesan kosong tampil, 0 kursus ditemukan, tanpa error | Pass | 01-search-empty.png |
+| 2 | 1 hasil | `/courses?q=zenith` | Tepat 1 course | 1 course tampil, Menampilkan 1–1 dari 1 kursus | Pass | 02-search-single-result.png |
+| 3 | Lebih dari 10 hasil | `/courses?status=open` | Halaman 1 maksimal 10 baris + pagination | 10 baris dari 19 kursus, pagination muncul | Pass | 03-pagination.png |
+| 4 | Keyword dengan spasi | `/courses?q=Web Modern` | Keyword terbaca benar (5 course dummy) | 5 course Web Modern tampil | Pass | |
+| 5 | Filter + page 2 | `/courses?status=open`, klik halaman 2 | q/status tetap, data tetap berstatus open | status=open tetap di alamat, data tetap Open | Pass | 05-filter-pagination-page2.png |
 
-Jumlah total course di database saat uji: ........ (isi dari `App\Models\Course::count()`)
+Jumlah total course di database saat uji: 31 (isi dari `App\Models\Course::count()`)
 
 ## B. Pengujian tambahan
 
