@@ -27,6 +27,44 @@
     </div>
 </section>
 
+<section class="pb-4">
+    <h2 class="h4 fw-bold mb-3">Ringkasan Data</h2>
+    <div class="row g-3">
+        <div class="col-6 col-lg-3">
+            <a href="{{ route('courses.index') }}" class="card h-100 shadow-sm text-decoration-none">
+                <div class="card-body">
+                    <div class="text-secondary small">Total Course</div>
+                    <div class="display-6 fw-bold text-dark">{{ $stats['courses'] }}</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a href="{{ route('courses.index', ['status' => 'open']) }}" class="card h-100 shadow-sm text-decoration-none">
+                <div class="card-body">
+                    <div class="text-secondary small">Course Open</div>
+                    <div class="display-6 fw-bold text-success">{{ $stats['open_courses'] }}</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <div class="text-secondary small">Participant</div>
+                    <div class="display-6 fw-bold text-dark">{{ $stats['participants'] }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a href="{{ route('enrollments.index') }}" class="card h-100 shadow-sm text-decoration-none">
+                <div class="card-body">
+                    <div class="text-secondary small">Enrollment</div>
+                    <div class="display-6 fw-bold text-dark">{{ $stats['enrollments'] }}</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
 <section class="pb-5">
     <h2 class="h4 fw-bold mb-3">Program Belajar Unggulan</h2>
     <div class="row g-3">

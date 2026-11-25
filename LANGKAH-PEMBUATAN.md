@@ -5,5 +5,6 @@
 3. **Pertemuan 10** (database + CRUD tahap 1: model, migration, index, create, store)
 4. **Pertemuan 11** (CRUD lanjutan): [LANGKAH-PERTEMUAN-11.md](LANGKAH-PERTEMUAN-11.md)
 5. **Pertemuan 12** (relasi database: participants, enrollments): [LANGKAH-PERTEMUAN-12.md](LANGKAH-PERTEMUAN-12.md)
+6. **Pertemuan 13** (search, filter status, pagination, Ajax, draft artikel): [LANGKAH-PERTEMUAN-13.md](LANGKAH-PERTEMUAN-13.md)
 
 Jangan membuat folder Laravel baru untuk pertemuan berikutnya; selalu lanjutkan project yang sama.

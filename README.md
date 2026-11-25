@@ -1,6 +1,6 @@
 # KursusKu
 
-Project praktikum Pemrograman Web III — **Pertemuan 12**.
+Project praktikum Pemrograman Web III — **Pertemuan 13**.
 
 Ini lanjutan project pertemuan 7, bukan project baru dari nol.
 Riwayat Git masih menyimpan landing page minggu 7, lalu commit UI + Ajax minggu 9.
@@ -72,9 +72,20 @@ Langkah rinci: [LANGKAH-PERTEMUAN-11.md](LANGKAH-PERTEMUAN-11.md).
 Setelah mengambil perubahan ini: `php artisan migrate` lalu `php artisan db:seed --class=ParticipantSeeder`.
 Langkah rinci: [LANGKAH-PERTEMUAN-12.md](LANGKAH-PERTEMUAN-12.md).
 
+## Fitur Milestone 13 — Data Discovery
+
+- Search `q` (kode atau nama), filter status `open/closed/draft`, pagination 10 item dengan `withQueryString()`
+- Empty state, urutan nama, dan form GET yang tetap bekerja tanpa JavaScript
+- Partial view `courses/_results.blade.php` + live search jQuery (debounce 300 ms) dan Ajax pagination di `resources/js/app.js`
+- Pagination memakai tampilan Bootstrap 5 (`AppServiceProvider`)
+- Dashboard count di beranda: total Course, Course open, Participant, Enrollment
+- Data dummy: `php artisan db:seed --class=CoursePaginationSeeder`
+- Tes: `php artisan test --filter=CourseSearchTest`
+
+Langkah rinci: [LANGKAH-PERTEMUAN-13.md](LANGKAH-PERTEMUAN-13.md).
+
 ## Belum Dikerjakan
 
-- Pagination, searching, Ajax filter
 - Authentication
 - Ajax POST
 
