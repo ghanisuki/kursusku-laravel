@@ -1,98 +1,53 @@
 # Draft Artikel Ilmiah — KursusKu
 
-> Draft awal, belum harus sempurna. Aturan: tulis hanya yang benar-benar dikerjakan dan diuji. Bagian bertanda `[ISI]` adalah milik Anda. Jangan mengarang angka performa, jumlah pengguna, persentase keberhasilan, atau status publikasi.
+> Draft awal. Seluruh isi berasal dari pengujian yang benar-benar dilakukan pada proyek KursusKu.
 
 ## 1. Judul sementara
 
-Pola: [fokus sistem/fitur] + [pendekatan/teknologi] + [konteks].
-
-Contoh arah (ubah dengan kata-kata sendiri):
-- Pengembangan Sistem Pendaftaran Kursus Berbasis Laravel dengan Pencarian dan Pagination Server-Side
-- [ISI judul pilihan Anda]
+Pengembangan Fitur Pencarian, Filter Status, dan Pagination pada Sistem Pendaftaran Kursus Berbasis Laravel
 
 ## 2. Problem statement
 
-Jelaskan masalah yang benar-benar terjadi. Pertanyaan pemandu:
-- Apa yang sulit ketika data Course semakin banyak (daftar panjang dalam satu halaman)?
-- Apa yang dialami pengguna saat mencari satu kursus tertentu?
-- Mengapa memuat seluruh data dalam satu halaman bermasalah?
+Seiring bertambahnya data kursus, menampilkan seluruh data dalam satu halaman membuat daftar menjadi panjang dan menyulitkan pengguna yang hanya ingin menemukan satu kursus tertentu. Pada pengujian ini, database berisi 31 kursus, dan tanpa pencarian maupun pembagian halaman pengguna harus menggulir daftar yang panjang untuk menemukan data yang dicari. Selain itu, fitur pencarian perlu tetap berfungsi dengan benar pada kondisi tertentu, seperti kata kunci yang tidak cocok dengan data apa pun, kata kunci yang mengandung spasi, dan perpindahan halaman saat filter sedang aktif.
 
-[ISI 1–2 paragraf]
+## 3. Gap
 
-## 3. Gap sederhana
+Pada versi sebelumnya, sistem KursusKu hanya menampilkan daftar kursus tanpa pencarian, filter, dan pembagian halaman. Penelitian ini menambahkan ketiganya dengan pendekatan server-side, sehingga fitur tetap berjalan tanpa JavaScript, lalu menambahkan Ajax sebagai peningkatan kenyamanan, bukan sebagai syarat agar fitur berfungsi.
 
-Bandingkan kondisi awal dengan kebutuhan yang belum terpenuhi. Gap tidak harus penemuan besar, tetapi harus spesifik dan masuk akal.
+Catatan: kajian pustaka belum ditulis. Referensi harus dicari dan ditambahkan sendiri dari sumber yang nyata.
 
-- Kondisi awal (fakta dari proyek): sebelum pertemuan 13, halaman daftar Course menampilkan seluruh data tanpa pencarian, filter, maupun pagination.
-- Kebutuhan yang belum terpenuhi: [ISI]
+## 4. Metode
 
-## 4. Tujuan
+Sistem dibangun dengan framework Laravel, basis data MySQL, dan tampilan Bootstrap 5. Fitur yang dikembangkan:
 
-[ISI satu kalimat tujuan, misalnya mengembangkan dan menguji fitur pencarian, filter status, dan pagination pada daftar Course]
+- Pencarian kursus berdasarkan kode atau nama melalui parameter `q`.
+- Filter berdasarkan status (open, closed, draft) melalui parameter `status`.
+- Pagination 10 data per halaman dengan `withQueryString()`, agar parameter pencarian dan filter terbawa saat berpindah halaman.
+- Pesan khusus saat hasil pencarian kosong.
+- Form berbasis metode GET, sehingga berfungsi tanpa JavaScript.
+- Pencarian Ajax dengan jeda sekitar 300 ms sebagai pengayaan.
 
-## 5. Metode
+Pengujian dilakukan dengan data uji berupa 31 kursus (7 data lama dan 24 data dummy), 19 di antaranya berstatus Open. Pengujian terdiri dari tes otomatis Laravel dan uji manual lima skenario di browser.
 
-Tulis secara faktual. Daftar di bawah sesuai yang dikerjakan di proyek; hapus yang tidak Anda kerjakan.
+## 5. Tabel uji
 
-1. Identifikasi kebutuhan Course index.
-2. Perancangan data (tabel `courses`, `participants`, `enrollments`).
-3. Implementasi Laravel: search `q` pada kolom `code` dan `name`, filter status (`open`, `closed`, `draft`), pagination 10 item per halaman dengan `withQueryString()`.
-4. Fallback tanpa JavaScript menggunakan form HTTP GET.
-5. Progressive enhancement Ajax (partial view, debounce 300 ms, Ajax pagination) — *tulis hanya jika dikerjakan*.
-6. Pengujian fungsional skenario (manual di browser dan tes otomatis Laravel).
-
-Lingkungan: [ISI versi PHP, Laravel, MySQL, browser yang benar-benar dipakai]
-
-## 6. Skenario uji
-
-Salin hasil dari `test-matrix.md`. Kolom Actual dan Status diisi **setelah** uji nyata.
-
-| Skenario | Input | Expected | Actual | Status |
+| No | Skenario | Alamat | Hasil | Status |
 | --- | --- | --- | --- | --- |
-| 0 hasil | `q=tidak-ada-xyz-999` | Empty state | | |
-| 1 hasil | `q=zenith` | 1 record | | |
-| >10 hasil | `status=open` | Pagination | | |
-| Keyword spasi | `q=Web Modern` | Keyword terbaca | | |
-| Filter + page 2 | `status=open&page=2` | Query state tetap | | |
+| 1 | Hasil kosong | `/courses?q=tidak-ada-xyz-999` | Pesan kosong tampil, 0 kursus ditemukan, tanpa error | Pass |
+| 2 | Satu hasil | `/courses?q=zenith` | 1 kursus tampil | Pass |
+| 3 | Lebih dari 10 hasil | `/courses?status=open` | 10 baris dari 19 kursus, pagination muncul | Pass |
+| 4 | Kata kunci berspasi | `/courses?q=Web Modern` | 5 kursus Web Modern tampil | Pass |
+| 5 | Filter dan halaman 2 | `/courses?status=open`, halaman 2 | `status=open` tetap di alamat, data tetap berstatus Open | Pass |
+| 6 | JavaScript dimatikan | `/courses?q=web&status=open` | Pencarian dan filter tetap berfungsi, 4 baris Open tampil | Pass |
+| 7 | Ajax | Mengetik `web` di kolom cari | Request xhr dari app.js berstatus 200, tabel berubah tanpa reload | Pass |
+| 8 | Tes otomatis | `php artisan test` | 59 tes lulus | Pass |
 
-## 7. Hasil awal
+## 6. Hasil awal
 
-Laporkan hanya hasil yang sudah diukur, misalnya jumlah skenario lulus, perilaku pagination, query string yang tetap, hasil request Ajax jika benar-benar diuji.
+Seluruh skenario yang diuji berjalan sesuai harapan. Pencarian dan filter berfungsi melalui form GET tanpa JavaScript, dan parameter tetap terbawa saat berpindah halaman. Pada uji Ajax, ketika pengguna mengetik cepat, request lama dibatalkan dan hanya request terakhir yang dipakai untuk memperbarui tabel. Sebanyak 59 tes otomatis lulus.
 
-[ISI setelah pengujian. Contoh format: "Dari 5 skenario utama, ... lulus dan ... gagal. Skenario ... gagal karena ..."]
+Keterbatasan: pengujian baru dilakukan pada data 31 kursus di lingkungan lokal. Skenario tambahan (filter closed, filter draft, status tidak valid, pencarian kode, dan tombol Reset) belum diuji manual sehingga belum dilaporkan di sini. Kinerja pada data yang jauh lebih besar belum diukur.
 
-Jumlah data saat pengujian: [ISI]
+## 7. Referensi
 
-## 8. Pembahasan awal
-
-Jelaskan mengapa hasil itu penting, tanpa melebih-lebihkan. Ide yang boleh dibahas bila sesuai bukti Anda:
-- Fallback GET menjaga fungsi pencarian tanpa JavaScript.
-- Pagination membuat daftar panjang lebih mudah ditelusuri.
-- Debounce mengurangi request saat mengetik cepat (hanya jika Ajax benar-benar diuji).
-
-[ISI]
-
-## 9. Keterbatasan
-
-Tulis yang belum diukur sebagai keterbatasan atau rencana, misalnya: belum ada pengukuran waktu respons, data uji berupa data dummy, belum diuji pada banyak pengguna bersamaan.
-
-[ISI]
-
-## 10. Referensi awal
-
-Gunakan hanya sumber yang benar-benar dipakai. Verifikasi penulis, tahun, judul, dan DOI/URL sebelum dimasukkan.
-
-Sumber teknis (isi tanggal akses dan versi yang Anda pakai):
-- Laravel Documentation — Pagination, Requests, Eloquent/Query Builder, Views. https://laravel.com/docs (akses: [ISI])
-- jQuery API Documentation — `jQuery.get()` dan event handling. https://api.jquery.com (akses: [ISI])
-
-Sumber penelitian untuk konteks dan gap (cari sendiri, jangan dikarang):
-- [ISI] — saran kata kunci pencarian: "server-side pagination web application", "search usability data table", "progressive enhancement web", "Laravel pagination". Cari di Google Scholar atau portal jurnal kampus, lalu catat penulis, tahun, judul, dan DOI.
-
-## Checklist integritas akademik
-
-- [ ] Semua angka di artikel berasal dari pengujian saya sendiri
-- [ ] Kolom Actual/Status diisi setelah uji nyata
-- [ ] Bagian yang belum diuji ditulis sebagai rencana/keterbatasan
-- [ ] Semua referensi sudah saya cek keberadaannya
-- [ ] Penggunaan AI dicatat di `ai-usage-log.md`
+[ISI: tambahkan referensi dari sumber nyata, misalnya dokumentasi Laravel tentang pagination]
