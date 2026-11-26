@@ -14,7 +14,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">Beranda</a>
                 </li>
@@ -34,6 +34,29 @@
                         Laporan Enrollment
                     </a>
                 </li>
+
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link @if (request()->routeIs('login')) active @endif"
+                           href="{{ route('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-success btn-sm" href="{{ route('register') }}">Daftar</a>
+                    </li>
+                @endguest
+
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link @if (request()->routeIs('profile')) active @endif"
+                           href="{{ route('profile') }}">Profil Saya ({{ auth()->user()->name }})</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+                        </form>
+                    </li>
+                @endauth
             </ul>
         </div>
     </div>
